@@ -1,0 +1,59 @@
+{
+  "name": "Gervaise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "jshintConfig": {
+    "curly": true,
+    "eqeqeq": true,
+    "nocomma": true,
+    "noyield": true
+  },
+  "scripts": {
+    "env": "env",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:js": "jshint scripts/*.js",
+    "build:js": "browserify ./scripts/development/libraries/*.js > scripts/production/lib.js",
+    "prebuildddd:js": "npm run lint",
+    "compress:images": "imagemin images/development/* images/production",
+    "compress:svg": "svgo svg/icons.svg svg/icons.min.svg",
+
+    "watch:css": "watch 'npm run build:sass && npm run build:sass-compressed' styles/sass",
+
+    "build:sass": "node-sass styles/styles.scss styles/styles.css --source-map-embed",
+    "build:sass-compressed": "node-sass styles/styles.scss styles/styles.min.css --source-map-embed  --output-style 'compressed'",
+    "prebuild:css": "npm run build:sass && npm run build:sass-compressed",
+    "build:css": "postcss --use autoprefixer --autoprefixer.browsers '> 0.1%' < styles/styles.css | cssnano > styles/styles.min.css",
+    "postbuild:css": "csslint --quiet --format=compact styles/styles.css",
+    "comb:css": "csscomb styles/style/sass/*.scss",
+
+
+    "watch": "npm run watch:css && npm run compress:images",
+    "build": "npm run build:css && npm run build:js && npm run compress:images && npm run compress:svg"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiinix/gervaise.git"
+  },
+  "author": "Carlos Eriksson",
+  "license": "ISC",
+  "homepage": "https://github.com/fiinix/gervaise#readme",
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "browserify": "^14.4.0",
+    "csscomb": "^4.2.0",
+    "csslint": "^1.0.5",
+    "cssnano": "^3.5.2",
+    "cssnano-cli": "^1.0.3",
+    "imagemin": "^4.0.0",
+    "imagemin-cli": "^2.1.0",
+    "jshint": "^2.9.5",
+    "node-sass": "^4.5.3",
+    "nodemon": "^1.11.0",
+    "postcss": "^5.0.19",
+    "postcss-cli": "^2.5.1",
+    "svgo": "^0.6.4",
+    "uglify-js": "^3.0.24",
+    "watch": "^0.18.0"
+  }
+}
